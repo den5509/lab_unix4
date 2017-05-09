@@ -16,5 +16,5 @@ clean:
 install:
         cp lab4 bin/lab4
 
-uninstall: 
+uninstall:
         rm -f bin/lab4
