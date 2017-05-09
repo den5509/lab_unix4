@@ -13,8 +13,8 @@ lab4.o: lab4.c lab4.h
 clean:
 	rm -f lab4 lab4.o pr_a.o pr_b.o
 
-install:
+install: lab4
 	cp lab4 bin/lab4
 
-uninstall:
+uninstall: 
 	rm -f bin/lab4

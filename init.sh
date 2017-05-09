@@ -1,4 +1,3 @@
-
 cd /work
 
 make clean && make install
