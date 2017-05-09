@@ -1,9 +1,9 @@
 ///////////////////////////////////////
 // lab4.h
 
-#include "pr_a.c"
+#include "pr_a.h"
 
-#include "pr_b.c"
+#include "pr_b.h"
 
 #ifndef DO_A
 #define DO_A(X) pr_a(X);
