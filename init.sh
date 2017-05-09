@@ -10,4 +10,7 @@ bin/lab4
 [ "$?" = "0" ] \
     && echo "Profit!" && exit 0\
 || echo "Error 2" && exit 1
-cat /work/lab4.txt
+
+cd /work
+
+cat lab4.txt
