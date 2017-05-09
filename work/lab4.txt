@@ -1,0 +1,130 @@
+#start docker container and start work with files in lab4 folder
+#files in folder work************
+
+bin/
+lab4.c
+lab4.h
+lab4.txt
+Makefile
+pr_a.c
+pr_b.c
+
+#editing lab4.c******************
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdio.h>
+
+#include "lab4.h"
+
+int main()
+{
+    pid_t pid, ppid;
+    int a =  0;
+    int b =  100;
+    (void)fork();
+    pid = getpid();
+    ppid = getppid();
+
+    if(fork() == -1){
+      printf("error");
+    } else if (fork() == 0){
+        a = DO_A(a);
+      printf("Children My pid = %d, my ppid = %d,result a = %d,result b = %d\n",(int)pid,(int)ppid,a,b);
+    } else {
+      b = DO_B(b);
+      printf("Parent My pid = %d, my ppid = %d,result a = %d,result b = %d\n",(int)pid,(int)ppid,a,b);
+    }
+    return 0;
+}
+
+#not editing lab4.h*******************
+
+//////////////////////////////////////
+// lab4.h
+
+#ifndef DO_A
+#define DO_A(X) pr_a(X);
+
+#endif /*DO_A*/
+
+#ifndef DO_B
+#define DO_B(X) pr_b(X);
+
+#endif /*DO_B*/
+
+#not editing pr_a.c*******************
+
+int pr_a( int x )
+{
+    return x + 1;
+}
+
+#editing pr_b.c***********************
+
+int pr_b( int x )
+{
+    return x + 1 ;
+}
+
+#editing Makefile*********************
+lab4: lab4.o pr_a.o pr_b.o lab4.h
+                gcc lab4.o pr_a.o pr_b.o -o lab4 -lm
+
+pr_a.o: pr_a.c
+                gcc -c pr_a.c
+
+pr_b.o: pr_b.c
+                gcc -c pr_b.c
+lab4.o: lab4.c lab4.h
+                gcc -c lab4.c
+
+clean:
+                rm -f lab4 lab4.o pr_a.o pr_b.o
+
+install:
+                cp lab4 bin/lab4
+
+uninstall:
+                rm -f bin/lab4
+
+root@digit-HP-Pavilion-dv7-Notebook-PC:/work# make lab4
+gcc -c lab4.c
+In file included from lab4.c:5:0:
+lab4.c: In function 'main':
+lab4.h:5:17: warning: implicit declaration of function 'pr_a' [-Wimplicit-function-declaration]
+ #define DO_A(X) pr_a(X);
+                 ^
+lab4.c:19:13: note: in expansion of macro 'DO_A'
+         a = DO_A(a);
+             ^
+lab4.h:10:17: warning: implicit declaration of function 'pr_b' [-Wimplicit-function-declaration]
+ #define DO_B(X) pr_b(X);
+                 ^
+lab4.c:22:11: note: in expansion of macro 'DO_B'
+       b = DO_B(b);
+           ^
+gcc -c pr_a.c
+gcc -c pr_b.c
+gcc lab4.o pr_a.o pr_b.o -o lab4 -lm
+root@digit-HP-Pavilion-dv7-Notebook-PC:/work# make install
+cp lab4 bin/lab4
+root@digit-HP-Pavilion-dv7-Notebook-PC:/work# ls
+Makefile  bin  lab4  lab4.c  lab4.h  lab4.o  lab4.txt  pr_a.c  pr_a.o  pr_b.c  pr_b.o
+root@digit-HP-Pavilion-dv7-Notebook-PC:/bin# cd /work/bin
+root@digit-HP-Pavilion-dv7-Notebook-PC:/work/bin# ls
+lab4
+root@digit-HP-Pavilion-dv7-Notebook-PC:/work# bin/lab4
+Parent My pid = 1059, my ppid = 11,result a = 0,result b = 101
+Parent My pid = 1060, my ppid = 1059,result a = 0,result b = 101
+Parent My pid = 1060, my ppid = 1059,result a = 0,result b = 101
+Children My pid = 1060, my ppid = 1059,result a = 1,result b = 100
+root@digit-HP-Pavilion-dv7-Notebook-PC:/work# Children My pid = 1060, my ppid = 1059,result a = 1,result b = 100
+Parent My pid = 1059, my ppid = 11,result a = 0,result b = 101
+Children My pid = 1059, my ppid = 11,result a = 1,result b = 100
+Children My pid = 1059, my ppid = 11,result a = 1,result b = 100
+
+
+
+
+
