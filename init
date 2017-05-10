@@ -1,0 +1,4 @@
+#!/bin/bash
+#Вывод отчета на экран при запуске
+cat /home/lab4/work/lab4.txt
+/bin/bash
